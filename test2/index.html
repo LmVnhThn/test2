@@ -1,395 +1,391 @@
 
-
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
- 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vẽ Đồ Thị</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"
-    integrity="sha512-2/6UJO9SBO6ElzgeETlFUdHgMkhe+0QZH64KTtz18x6GA3Z6PpBHDJFvWrGCsXVQI1E2S/pB4Zqqdn0MEv5+Vg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"
-    integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js"
-    integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png">
+	<title>Đồ thị</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"
+		integrity="sha512-2/6UJO9SBO6ElzgeETlFUdHgMkhe+0QZH64KTtz18x6GA3Z6PpBHDJFvWrGCsXVQI1E2S/pB4Zqqdn0MEv5+Vg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"
+		integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js"
+		integrity="sha512-FuXN8O36qmtA+vRJyRoAxPcThh/1KJJp7WSRnjCpqA+13HYGrSWiyzrCHalCWi42L5qH1jt88lX5wy5JyFxhfQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>	
 </head>
+
 <style>
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+	* {
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+	}
 
-  body {
-    font-family: "Open Sans", sans-serif;
-  }
+	body {
+		font-family: "Open Sans", sans-serif;
+	}
 
-  :root {
-    --white: #dbeeff;
+	:root {
+    --white: rgb(219, 238, 255);
     --black: #000;
-    --primary: #e0f70c;
+    --primary: rgb(224, 247, 12);
   }
 
-  .wide {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+	.wide {
+		max-width: 1000px;
+		margin: 0 auto;
+	}
 
-  .header_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+	.background {
+    background: 
+        url("https://wallpaperaccess.com/full/1093309.jpg");
 
-  .header_container img {
-    max-width: 100px;
-    margin-top: 5px;
-    border-radius: 10px;
+    background-size: cover;
+    background-position: center center;
+   
   }
+	.header_container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
-  .slider {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	.header_container img {
+		max-width: 100px;
+		margin-top: 5px;
+		border-radius: 10px;
+	}
 
-  .content {
-    margin-left: 25px;
-    text-align: left;
-    font-size: 19px;
-  }
+	.header_nav {
+		line-height: 50px;
+	}
 
-  .container {
-    color: var(--white);
-  }
+	.header_nav ul li {
+		display: inline-block;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition: all .3s ease;
+		font-size: 15px;
+		position: relative;
+		border-radius: 5px;
+	}
 
-  .container .about {
-    max-width: 800px;
+	.header_nav li:hover {
+		background-color: var(--primary)
+	}
 
-    line-height: 1.5;
-    padding: 0 5px;
-    border: 2px solid var(--white);
-    padding: 15px;
-    box-shadow: #fff 0px 0px 20px 5px;
-    border-radius: 15px;
-    text-align: center;
-    margin: 0 auto;
-  }
+	.header_nav li:hover a {
+		color: var(--black)
+	}
 
-  @keyframes identifier {
-    from {
-      opacity: 0;
-      transform: rotateX(90deg);
-    }
+	.header_nav li .sub {
+		position: absolute;
+		background-color: var(--white);
+		width: 100%;
+		border-radius: 5px;
+		margin-top: 5px;
+		display: none;
+		animation: identifier .7s ease;
+		transform-origin: top center;
+	}
 
-    to {
-      opacity: 1;
-      transform: rotateX(0);
-    }
-  }
+	.header_nav li .sub:after {
+		content: '';
+		width: 100px;
+		height: 20px;
+		position: absolute;
+		top: -10px;
+	}
 
-  .header_nav .sub li {
-    display: block;
-    padding: 0 15px;
-  }
+	.slider {
+		height: 200px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-  .header_nav ul li:hover .sub {
-    display: block;
-  }
+	.content {
+		margin-left: 25px;
+		text-align: left;
+		font-size: 19px;
+	}
 
-  .header_nav li a {
-    color: var(--white);
-    text-decoration: none;
-    transition: all 0.5s ease-in-out;
-    padding: 15px 10px;
-  }
+	.container {
+		color: var(--white);
+	}
 
-  .header_nav li i {
-    padding-right: 5px;
-  }
+	.container .about {
+		max-width: 800px;
 
-  .chart_container {
-    margin-top: 25px;
-  }
+		line-height: 1.5;
+		padding: 0 5px;
+		border: 2px solid var(--white);
+		padding: 15px;
+		box-shadow: #fff 0px 0px 20px 5px;
+		border-radius: 15px;
+		text-align: center;
+		margin: 0 auto;
+	}
 
-  .chart_container ul {
-    text-align: center;
-  }
+	@keyframes identifier {
+		from {
+			opacity: 0;
+			transform: rotateX(90deg);
+		}
 
-  .chart_container ul li {
-    display: inline-block;
-    color: #FFFFFF;
-    list-style: none;
-    padding: 10px;
-    margin: 0 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+		to {
+			opacity: 1;
+			transform: rotateX(0);
+		}
+	}
 
-  .chart_container ul li.active {
-    background-color:#00CC00;
-    color: #000;
-  }
+	.header_nav .sub li {
+		display: block;
+		padding: 0 15px;
+	}
 
-  .chart_container h2 {
-    font-weight: 500;
-    text-align: left;
-    margin: 25px;
-    font-size: 35px;
-    color: #000022;
+	.header_nav ul li:hover .sub {
+		display: block;
+	}
 
-  }
+	.header_nav li a {
+		color: var(--white);
+		text-decoration: none;
+		transition: all 0.5s ease-in-out;
+		padding: 15px 10px;
+	}
 
-  .form_data {
-    margin-top: 25px;
-  }
+	.header_nav li i {
+		padding-right: 5px;
+	}
 
-  .form_data form {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-  }
+	.chart_container {
+		margin-top: 25px;
+	}
 
-  .form_data input {
-    padding: 5px 3px;
-    border-radius: 5px;
-    font-size: 15px;
-  }
+	.chart_container ul {
+		text-align: center;
+	}
 
-  .form_data h3 {
-    color: #000022;
-    text-align: left;
-  }
+	.chart_container ul li {
+		display: inline-block;
+		color: rgb(255, 255, 255);
+		list-style: none;
+		padding: 10px;
+		margin: 0 5px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
 
-  .form_data label {
-    color: #000;
-    background-color: hsl(60, 89%, 69%);
-    padding: 3px 10px;
-    border-radius: 15px;
-    display: inline-block;
-    vertical-align: middle;
-  }
+	.chart_container ul li.active {
+		background-color: #f5b846;
+		color: #000;
+	}
 
-  #canvas-container {
-    height: 500px;
-    background-color: #FFFFFF;
-    margin-top: 25px;
-    border-radius: 5px;
-    padding: 15px;
-  }
+	.chart_container h2 {
+		font-weight: 500;
+		text-align: center;
+		margin: 25px;
+		font-size: 35px;
+		color: rgb(218, 7, 7);
 
-  .data_settings {
-    margin-top: 25px;
-  }
+	}
 
-  .data_settings form {
-    display: flex;
-    justify-content: space-between;
-  }
+	.form_data {
+		margin-top: 25px;
+	}
 
-  .input-group {
-    color: #FF0000;
-  }
+	.form_data form {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 15px;
+	}
 
-  .input-group:first-child {
-    margin: 0 15px;
-  }
+	.form_data input {
+		padding: 5px 3px;
+		border-radius: 5px;
+		font-size: 15px;
+	}
 
-  .input-group input {
-    margin-top: 10px;
-    padding: 3px 5px;
-    border-radius: 5px;
-  }
+	.form_data h3 {
+		color: rgb(182, 5, 102);
+		text-align: center;
+	}
 
-  .input-group button {
-    background-color: #0000CC;
-    padding: 2px 10px;
-    border: none;
-    border-radius: 5px;
-    font-weight: 900;
-    font-size: 16px;
-    vertical-align: middle;
-  }
+	.form_data label {
+		color: #000;
+		background-color: hsl(71, 97%, 73%);
+		padding: 3px 10px;
+		border-radius: 15px;
+		display: inline-block;
+		vertical-align: middle;
+	}
 
-  .color_group {
-    display: flex;
-  }
+	#canvas-container {
+		height: 500px;
+		background-color: rgb(241, 235, 235);
+		margin-top: 25px;
+		border-radius: 5px;
+		padding: 15px;
+	}
 
-  .colorpicker {
-    border: 3px solid transparent;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-#cn {
-    text-align: center;
-    color: #33FFCC;
-    font-size: 45px;
-  }
-  img.x{
-    position: absolute;
-    left: 35px;
-    top: 35px;
-    z-index: -1;
-  }
-  img.y{
-    position: absolute;
-    right: 25px;
-    top: 200px; 
-    z-index: -1;
-  }
+	.data_settings {
+		margin-top: 25px;
+	}
+
+	.data_settings form {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.input-group {
+		color: rgb(255, 255, 255);
+	}
+
+	.input-group:first-child {
+		margin: 0 15px;
+	}
+
+	.input-group input {
+		margin-top: 10px;
+		padding: 3px 5px;
+		border-radius: 5px;
+	}
+
+	.input-group button {
+		background-color: #ff5100;
+		padding: 2px 10px;
+		border: none;
+		border-radius: 5px;
+		font-weight: 900;
+		font-size: 16px;
+		vertical-align: middle;
+	}
+
+	.color_group {
+		display: flex;
+	}
+
+	.colorpicker {
+		border: 3px solid transparent;
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		border-radius: 5px;
+		margin-top: 10px;
+	}
 </style>
-<body { background="https://www.vnecotec.com/wp-content/uploads/2020/11/IoT-Platform-770x400.jpg">
-  <h1 id="cn">ĐẠI HỌC CẦN THƠ</h1>
-  <h2 id="cn">CÔNG NGHỆ IOT VÀ ỨNG DỤNG</h2>
-  
-  <img class="x" src="https://upload.wikimedia.org/wikipedia/vi/thumb/6/6c/Logo_Dai_hoc_Can_Tho.svg/2048px-Logo_Dai_hoc_Can_Tho.svg.png" width="90" height="auto">
-</body>
-<head>
-  <style>
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #FF6666;
-}
-li {
-  float: left;
-}
-li a {
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-li a:hover{
-  color: white;
-  background-color: #CC9966;
-  font-weight: bold;
-}
-.active {
-  background-color: #339966;
-  color: white;
-}
-</style>
-<style>
-  div.nd {
-    border-style: dashed;
-    border-radius: 10px;
-    border: 5px solid #99CC66;
-    background-color: #00CC99;
-    margin: 20px 500px 20px 20px;
-  }
-  div.nn {
-    border-style: solid;
-    border-radius: 10px;
-    border: 5px solid #99CC66;
-    background-color: #00CC99;
-    margin: 20px 500px 20px 20px;
-  }
 
-</style>
-</head>
 <body>
-
 	<div class="background">
-    <div class="wide">
-      <header> 
-          <nav class="header_nav">
-            <ul>
-              <li><a href="Thong tin sinh vien "><b>Thông tin sinh viên</b></a></li>
-              <li><a href="Ppt bac 2"><b>Giải phương trình bậc hai</b></a></li>
-              <li><a href="Do thi"><b>Vẽ đồ thị</b></a></li>
-              </ul>
-          </nav>
-        </div>
-      </header>
-      <div>
-        <div class="chart_container">
-          <div class="content">
-            <center>
-              <tr>
-                <td>
-            <ul>
-              <li class="graphSelect chart_type active" id="bacHai"><b>Đồ thị bậc hai</b></li>
-              <li class="graphSelect chart_type" id="bacBa"><b>Đồ thị bậc ba</b></li>
-              <li class="graphSelect chart_type" id="bacBon"><b>Đồ thị bậc Bốn</b></li>
-            </ul>
-          </td>
-            </tr>
-        </center>
-            <div class="form_data">
-              <h3 align="left"> Nhập hệ số</h3>
-              <form class="coeff-form"  autocomplete="off">
-                <div class="input_group" id="a-coeff">
-                  <label for="number_a">a</label>
-                  <input type="text" class="form-control" id="number_a"/>
-                </div>
+		<div class="wide">
+			<header>
+				<div class="header_container">
+					<div class="header_logo">
+						<a href="https://www.ctu.edu.vn/"><img
+								src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png"
+								alt="Logo Đại học Cần Thơ"></a>
+					</div>
+					<nav class="header_nav">
+						<ul>
+							<li><a href="https://phu1305.github.io/Long-phu/Trang%20chu%202.html"><b>Thông tin sinh viên</b></a></li>
+							<li><a href="https://phu1305.github.io/Long-phu/Toan.html"><b>Giải phương trình bậc hai</b></a></li>
+							<li><a href="https://phu1305.github.io/Long-phu/Dothi.html"><b>Vẽ đồ thị</b></a></li>
+						  </ul>
+					</nav>
+				</div>
+			</header>
+			<div>
+				<div class="chart_container">
+					<div class="content">
+						<center>
+						<table border="8">
+							<tr>
+								<td>
+						<h2><b>Các hàm cơ bản</b></h2>
+						<ul id="menu-container" class="">
+							<li class="graphSelect chart_type active" id="bacHai"><b>Đồ thị bậc hai</b></li>
+							<li class="graphSelect chart_type" id="bacBa"><b>Đồ thị bậc ba</b></li>
+							<li class="graphSelect chart_type" id="bacBon"><b>Đồ thị bậc bốn</b></li>
+						</ul>
+					</td>
+					
+					<td>
+						<h2><b>Các hàm lượng giác</b></h2>
+						<ul>
+							<li class="graphSelect chart_type" id="sin"><b>Đồ thị hàm Sin</b></li>
+							<li class="graphSelect chart_type" id="cos"><b>Đồ thị hàm Cos</b></li>
+							<li class="graphSelect chart_type" id="tan"><b>Đồ thị hàm Tan</b></li>
+						</ul>
+					</td>
+						</tr>
+					</table>
+				</center>
+						<div class="form_data">
+							<h3>Nhập hệ số</h3>
+							<form class="coeff-form" role="presentation" autocomplete="off">
+								<div class="input_group" id="a-coeff">
+									<label for="number_a">a</label>
+									<input type="text" class="form-control" id="number_a" />
+								</div>
 
-                <div class="input_group" id="b-coeff">
-                  <label for="number_b">b</label>
-                  <input type="text" class="form-control" id="number_b"/>
-                </div>
+								<div class="input_group" id="b-coeff">
+									<label for="number_b">b</label>
+									<input type="text" class="form-control" id="number_b" />
+								</div>
 
-                <div class="input_group" id="c-coeff">
-                  <label for="number_c">c</label>
-                  <input type="text" class="form-control" id="number_c"/>
-                </div>
+								<div class="input_group" id="c-coeff">
+									<label for="number_c">c</label>
+									<input type="text" class="form-control" id="number_c" />
+								</div>
 
-                <div class="input-group" id="d-coeff">
-                  <label for="number_d">d</label>
-                  <input type="text" class="form-control" id="number_d"/>
-                </div>
-              </form>
-            </div>
-          </div>
+								<div class="input-group" id="d-coeff">
+									<label for="number_d">d</label>
+									<input type="text" class="form-control" id="number_d" />
+								</div>
+							</form>
+						</div>
+					</div>
 
-          <div class="content">
-            <div id="canvas-container">
-              <canvas id="myChart"></canvas>
-            </div>
-          </div>
+					<div class="content">
+						<div id="canvas-container">
+							<canvas id="myChart"></canvas>
+						</div>
+					</div>
 
 
-          <div class="container">
-            <span>Màu sắc</span>
-            <div class="color_group">
-              <div class="colorpicker" id="AAAAAA"></div>
-              <div class="colorpicker" id="7f00ff"></div>
-              <div class="colorpicker" id="8B4513"></div>
-              <div class="colorpicker" id="8B3A3A"></div>
-              <div class="colorpicker" id="fffb38"></div>
-              <div class="colorpicker" id="00FF00"></div>
-            </div>
-          </div>
+					<div class="container">
+						<span>Màu sắc</span>
+						<div class="color_group">
+							<div class="colorpicker" id="AAAAAA"></div>
+							<div class="colorpicker" id="7f00ff"></div>
+							<div class="colorpicker" id="8B4513"></div>
+							<div class="colorpicker" id="8B3A3A"></div>
+							<div class="colorpicker" id="fffb38"></div>
+							<div class="colorpicker" id="00FF00"></div>
+						</div>
+					</div>
 
-          </form>
+					</form>
 
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    const colorPickers = document.querySelectorAll('.container .colorpicker')
-    colorPickers.forEach(color => {
-      color.style.backgroundColor = '#' + color.id
-    })
-  </script>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const colorPickers = document.querySelectorAll('.container .colorpicker')
+		colorPickers.forEach(color => {
+			color.style.backgroundColor = '#' + color.id
+		})
+	</script>
 
-  <script type="module" src="https://phu1305.github.io/Long-phu/chart.js"></script>
-
-</div>
+	<script type="module" src="https://phu1305.github.io/Long-phu/chart.js"></script>
 </body>
+
 </html>
